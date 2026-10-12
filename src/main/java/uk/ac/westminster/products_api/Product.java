@@ -14,6 +14,7 @@ public class Product {
         this.price = price;
     }
 
+    // Jackson needs a public getter for each private field to include it in the JSON
     public Long getId() { return id; }
     public String getName() { return name; }
     public double getPrice() { return price; }
