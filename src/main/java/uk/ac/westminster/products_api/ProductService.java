@@ -27,4 +27,8 @@ public class ProductService {
         products.add(product);
         return product;
     }
+
+    public void deleteProduct(Long id) {
+        products.removeIf(p -> p.getId().equals(id));
+    }
 }
