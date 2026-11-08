@@ -1,13 +1,15 @@
-# Product Catalogue – UML Class Diagram (Tutorial 3)
+# Product Hierarchy – UML Class Diagram (Tutorial 5)
 
 ```mermaid
 classDiagram
     class Product {
+        <<abstract>>
         -Long id
         -String name
         -double price
         +Product()
         +Product(Long id, String name, double price)
+        +getSummary()* String
         +getId() Long
         +getName() String
         +getPrice() double
@@ -15,23 +17,37 @@ classDiagram
         +setName(String name) void
         +setPrice(double price) void
     }
-    class ProductService {
-        -List~Product~ products
-        -Long nextId
-        +getAllProducts() List~Product~
-        +getProductById(Long id) Optional~Product~
-        +addProduct(Product product) Product
-        +deleteProduct(Long id) void
-        +findByName(String name) List~Product~
+    class Discountable {
+        <<interface>>
+        +applyDiscount(double rate) void
+        +getDiscountedPrice() double
     }
-    class ProductController {
-        -ProductService productService
-        +getAllProducts() List~Product~
-        +getProductById(Long id) Product
-        +addProduct(Product product) Product
-        +deleteProduct(Long id) void
-        +search(String name) List~Product~
+    class DigitalProduct {
+        -String downloadUrl
+        -double fileSizeMB
+        -double discountedPrice
+        +DigitalProduct()
+        +DigitalProduct(Long id, String name, double price, String downloadUrl, double fileSizeMB)
+        +getSummary() String
+        +applyDiscount(double rate) void
+        +getDiscountedPrice() double
+        +getDownloadUrl() String
+        +getFileSizeMB() double
     }
-    ProductController ..> ProductService
-    ProductService --> Product
+    class PhysicalProduct {
+        -double weightKg
+        -String dimensions
+        -double discountedPrice
+        +PhysicalProduct()
+        +PhysicalProduct(Long id, String name, double price, double weightKg, String dimensions)
+        +getSummary() String
+        +applyDiscount(double rate) void
+        +getDiscountedPrice() double
+        +getWeightKg() double
+        +getDimensions() String
+    }
+    Product <|-- DigitalProduct
+    Product <|-- PhysicalProduct
+    Discountable <|.. DigitalProduct
+    Discountable <|.. PhysicalProduct
 ```
