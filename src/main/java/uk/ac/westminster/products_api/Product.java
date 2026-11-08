@@ -14,6 +14,11 @@ public class Product {
         this.price = price;
     }
 
+    // Generic summary - subclasses override this with their own version
+    public String getSummary() {
+        return getName() + " - £" + getPrice();
+    }
+
     // Jackson needs a public getter for each private field to include it in the JSON
     public Long getId() { return id; }
     public String getName() { return name; }
