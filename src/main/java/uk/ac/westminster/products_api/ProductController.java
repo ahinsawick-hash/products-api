@@ -17,6 +17,17 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
+    // One call, one line per product - each subclass answers with its own getSummary()
+    @GetMapping("/products/summaries")
+    public List<String> getSummaries() {
+        return productService.getAllSummaries();
+    }
+
+    @GetMapping("/products/search")
+    public List<Product> search(@RequestParam String name) {
+        return productService.findByName(name);
+    }
+
     @GetMapping("/products/{id}")
     public Product getProductById(@PathVariable Long id) {
         return productService.getProductById(id).orElse(null);
@@ -32,10 +43,5 @@ public class ProductController {
     @DeleteMapping("/products/{id}")
     public void deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
-    }
-
-    @GetMapping("/products/search")
-    public List<Product> search(@RequestParam String name) {
-        return productService.findByName(name);
     }
 }
